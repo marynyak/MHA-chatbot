@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSUN MHA Field Experience Chatbot</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; }
+    .container { max-width: 800px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
+    header { background: #800000; color: #fff; padding: 20px; text-align: center; }
+    header h1 { margin: 0; font-size: 1.5em; }
+    #chatbox { padding: 20px; height: 400px; overflow-y: auto; border-bottom: 1px solid #ccc; }
+    .user, .bot { margin: 10px 0; }
+    .user { text-align: right; }
+    .bot { text-align: left; }
+    .user span, .bot span { display: inline-block; padding: 10px; border-radius: 8px; max-width: 70%; }
+    .user span { background-color: #800000; color: white; }
+    .bot span { background-color: #eee; color: #333; }
+    #input-area { display: flex; padding: 15px; }
+    #input-area input { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+    #input-area button { margin-left: 10px; background-color: #800000; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CSUN MHA Field Experience Chatbot</h1>
+      <p>Field Experience Coordinator: <strong>Dr. Kim Joo</strong></p>
+    </header>
+    <div id="chatbox"></div>
+    <div id="input-area">
+      <input type="text" id="user-input" placeholder="Ask a question about field experience..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById('chatbox');
+
+    const qaPairs = [
+      { q: 'eligibility', a: 'Students must meet all program and department requirements before starting field experience. Contact Dr. Kim Joo for more details.' },
+      { q: 'prerequisite', a: 'Students must complete required core MHA courses before enrolling in field experience.' },
+      { q: 'hours', a: 'Students must complete a specified number of field hours determined by the department.' },
+      { q: 'site selection', a: 'Students should select a site related to health administration and approved by Dr. Kim Joo.' },
+      { q: 'application', a: 'Students must submit a field placement application prior to the start of the semester.' },
+      { q: 'deadline', a: 'Field experience applications must be submitted by the posted deadlines each semester.' },
+      { q: 'supervisor', a: 'Site supervisors must have appropriate qualifications and experience in health administration.' },
+      { q: 'affiliation', a: 'Sites must have an active affiliation agreement with CSUN before placements can begin.' },
+      { q: 'orientation', a: 'Students will attend an orientation session before beginning their placement.' },
+      { q: 'evaluation', a: 'Students will be evaluated by their site supervisor and faculty advisor.' },
+      { q: 'learning objectives', a: 'Students should develop learning objectives in collaboration with their site supervisor.' },
+      { q: 'forms', a: 'All necessary forms can be obtained from the department or the field experience coordinator.' },
+      { q: 'background check', a: 'Some sites require background checks before beginning placement.' },
+      { q: 'health', a: 'Students may need to submit proof of immunizations depending on site requirements.' },
+      { q: 'remote', a: 'Remote or hybrid placements may be considered if approved by the coordinator.' },
+      { q: 'paid', a: 'Some placements may offer compensation, though it is not guaranteed.' },
+      { q: 'international', a: 'International students should consult with the international office for placement authorization.' },
+      { q: 'safety', a: 'Students must follow all safety guidelines provided by the site and CSUN.' },
+      { q: 'confidentiality', a: 'Students must adhere to all confidentiality and HIPAA requirements.' },
+      { q: 'timesheet', a: 'Students must submit signed timesheets verifying their completed hours.' },
+      { q: 'communication', a: 'Students should maintain regular communication with Dr. Kim Joo regarding progress and concerns.' },
+      { q: 'extension', a: 'Students needing additional time should contact the coordinator for possible extension options.' },
+      { q: 'accommodation', a: 'Students requiring accommodations should contact the Disability Resources office and Dr. Kim Joo.' },
+      { q: 'grading', a: 'Grades are based on completion of hours, evaluations, and faculty assessment.' },
+      { q: 'transportation', a: 'Students are responsible for their own transportation to and from the site.' }
+    ];
+
+    function addMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add(sender);
+      const span = document.createElement('span');
+      span.textContent = text;
+      msgDiv.appendChild(span);
+      chatbox.appendChild(msgDiv);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage('user', text);
+      input.value = '';
+      setTimeout(() => {
+        const response = findAnswer(text);
+        addMessage('bot', response);
+      }, 400);
+    }
+
+    function findAnswer(question) {
+      const qLower = question.toLowerCase();
+      const found = qaPairs.find(pair => qLower.includes(pair.q));
+      return found ? found.a : 'Please contact Dr. Kim Joo for assistance with your specific field experience question.';
+    }
+
+    addMessage('bot', 'Hello! I can help answer questions about the CSUN MHA Field Experience. You can ask about hours, site selection, requirements, and more.');
+  </script>
+</body>
+</html>
